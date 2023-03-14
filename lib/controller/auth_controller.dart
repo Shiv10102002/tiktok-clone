@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tictok/Views/Screen/home_screen.dart';
 import 'package:tictok/Views/Screen/login_screen.dart';
@@ -41,7 +39,7 @@ class AuthController extends GetxController {
     if (user == null) {
       Get.offAll(() => LoginScreen());
     } else {
-      Get.offAll(() => HomeScreen());
+      Get.offAll(() => const HomeScreen());
     }
   }
 
@@ -58,7 +56,7 @@ class AuthController extends GetxController {
 
         MyUser user = MyUser(
             name: username,
-            ProfilePhoto: downloadUrl,
+            profilePhoto: downloadUrl,
             email: email,
             uid: credential.user!.uid);
 

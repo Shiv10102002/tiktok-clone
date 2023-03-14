@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class video {
+class Video {
   String username;
   String uid;
   String id;
@@ -13,7 +13,7 @@ class video {
   String thumbnail;
   String profilePic;
 
-  video(
+  Video(
       {required this.username,
       required this.uid,
       required this.id,
@@ -40,9 +40,9 @@ class video {
         "profilePic": profilePic,
       };
 
-  static video fromSnap(DocumentSnapshot snap) {
+  static Video fromSnap(DocumentSnapshot snap) {
     var sst = snap.data() as Map<String, dynamic>;
-    return video(
+    return Video(
         username: sst["username"],
         uid: sst["uid"],
         id: sst["id"],
@@ -53,7 +53,6 @@ class video {
         caption: sst["caption"],
         videoUrl: sst["videoUrl"],
         thumbnail: sst["thumbnail"],
-        profilePic: sst["profilePic"]
-        );
+        profilePic: sst["profilePic"]);
   }
 }

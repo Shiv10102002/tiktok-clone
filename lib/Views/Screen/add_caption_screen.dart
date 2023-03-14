@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tictok/Views/Widgets/textinput_field.dart';
 import 'package:tictok/constraint.dart';
 import 'package:tictok/controller/upload_video_controller.dart';
@@ -18,13 +19,13 @@ class AddCaptionScreen extends StatefulWidget {
 
 class _AddCaptionScreenState extends State<AddCaptionScreen> {
   late VideoPlayerController videoPlayerController;
-  TextEditingController _songnameController = TextEditingController();
-  TextEditingController _captionController = TextEditingController();
-  
+  VideoUploadController videoUploadController =
+      Get.put(VideoUploadController());
+  final TextEditingController _songnameController = TextEditingController();
+  final TextEditingController _captionController = TextEditingController();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       videoPlayerController = VideoPlayerController.file(widget.videoFIle);
@@ -37,11 +38,11 @@ class _AddCaptionScreenState extends State<AddCaptionScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     videoPlayerController.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -72,9 +73,12 @@ class _AddCaptionScreenState extends State<AddCaptionScreen> {
                 height: 10,
               ),
               ElevatedButton(
-                onPressed: () {},
-                child: const Text("Upload"),
+                onPressed: () {
+                  VideoUploadController.uploadVideo(_songnameController.text,
+                      _captionController.text, widget.videoPath);
+                },
                 style: ElevatedButton.styleFrom(backgroundColor: buttoncolor),
+                child: const Text("Upload"),
               ),
             ]),
           )

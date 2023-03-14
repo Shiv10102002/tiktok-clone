@@ -3,7 +3,7 @@ import 'package:tictok/Views/Widgets/customAddIcon.dart';
 import 'package:tictok/constraint.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.search),
           ),
 //for
-          BottomNavigationBarItem(label: "", icon: customAddIcon()),
+          BottomNavigationBarItem(label: "", icon: CustomAddIcon()),
 //for message
           BottomNavigationBarItem(
             label: "Message",
@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         currentIndex: pageidx,
       ),
-      body: Center(child: PageIndex[pageidx]),
+      body: Center(child: pageIndex[pageidx]),
     );
   }
 }

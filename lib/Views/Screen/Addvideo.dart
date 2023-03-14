@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tictok/Views/Screen/add_caption_screen.dart';
@@ -70,7 +69,7 @@ class AddVideoScreen extends StatelessWidget {
           height: 40,
           decoration: BoxDecoration(
               color: buttoncolor, borderRadius: BorderRadius.circular(12)),
-          child: Center(
+          child: const Center(
               child: Text(
             "Upload video",
             style: TextStyle(

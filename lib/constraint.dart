@@ -7,10 +7,10 @@ const backgroundcolor = Colors.black;
 var buttoncolor = Colors.red[400];
 
 const bordercolor = Colors.grey;
-var PageIndex = [
-  DisplayVideoScreen(),
-  Text("search"),
-  AddVideoScreen(),
-  Text("Message"),
-  Text("Profile"),
+var pageIndex = [
+  const DisplayVideoScreen(),
+  const Text("search"),
+  const AddVideoScreen(),
+  const Text("Message"),
+  const Text("Profile"),
 ];

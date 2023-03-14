@@ -13,7 +13,6 @@ class _TikTokVideoPlayerState extends State<TikTokVideoPlayer> {
   late VideoPlayerController videoPlayerController;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     videoPlayerController = VideoPlayerController.network(widget.videoUrl)
       ..initialize().then((value) => () {
@@ -23,16 +22,16 @@ class _TikTokVideoPlayerState extends State<TikTokVideoPlayer> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     videoPlayerController.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(color: Colors.black),
+      decoration: const BoxDecoration(color: Colors.black),
       child: VideoPlayer(videoPlayerController),
     );
   }

@@ -9,9 +9,10 @@ import 'package:uuid/uuid.dart';
 import 'package:video_compress/video_compress.dart';
 
 class VideoUploadController extends GetxController {
-  var uuid = Uuid();
+  static final uuid = Uuid();
   //upload video to firestor
-  UploadVideo(String songName, String caption, String videoPath) async {
+
+  static uploadVideo(String songName, String caption, String videoPath) async {
     try {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       DocumentSnapshot userDoc =
@@ -19,8 +20,8 @@ class VideoUploadController extends GetxController {
       String id = uuid.v1();
       String videoUrl = await uploadVideoToStorage(id, videoPath);
       String thumbnail = await uploadVideoThumbToStorage(id, videoPath);
-      video Video = video(
-        username: (userDoc.data()! as Map<String, dynamic>)['name'],
+      Video video = Video(
+        username: (userDoc.data()! as Map<String, dynamic>)['username'],
         uid: uid,
         id: id,
         likes: [],
@@ -30,13 +31,13 @@ class VideoUploadController extends GetxController {
         caption: caption,
         videoUrl: videoUrl,
         thumbnail: thumbnail,
-        profilePic: (userDoc.data()! as Map<String, dynamic>)['profilePicture'],
+        profilePic: (userDoc.data()! as Map<String, dynamic>)['profilePic'],
       );
 
       await FirebaseFirestore.instance
           .collection("videos")
           .doc(id)
-          .set(Video.tojson());
+          .set(video.tojson());
       Get.snackbar(
           "video uploaded successfully", "Thankyou for shareing your content");
     } catch (e) {
@@ -53,9 +54,9 @@ Future<File> _getThumb(String videoPath) async {
 }
 
 //upload thumbnail to firestore
-Future<String> uploadVideoThumbToStorage(String Id, String videoPath) async {
+Future<String> uploadVideoThumbToStorage(String id, String videoPath) async {
   Reference reference =
-      FirebaseStorage.instance.ref().child("videos").child(Id);
+      FirebaseStorage.instance.ref().child("videos").child(id);
   UploadTask uploadTask = reference.putFile(await _getThumb(videoPath));
   TaskSnapshot snapshot = await uploadTask;
   String downloadurl = await snapshot.ref.getDownloadURL();

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:tictok/Views/Screen/login_screen.dart';
 import 'package:tictok/Views/Widgets/textinput_field.dart';
 import 'package:tictok/controller/auth_controller.dart';
-import 'dart:io';
 
 class SinupScreen extends StatelessWidget {
   SinupScreen({super.key});
