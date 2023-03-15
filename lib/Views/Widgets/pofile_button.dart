@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 
-class ProfileButton extends StatelessWidget {
-  String profilePicUrl;
-  ProfileButton({super.key, required this.profilePicUrl});
+class ProfileButton extends StatefulWidget {
+  final String profilePicUrl;
+  const ProfileButton({super.key, required this.profilePicUrl});
+
+  @override
+  State<ProfileButton> createState() => _ProfileButtonState();
+}
+
+class _ProfileButtonState extends State<ProfileButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -21,7 +27,7 @@ class ProfileButton extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(25),
                 child: Image(
-                  image: NetworkImage(profilePicUrl),
+                  image: NetworkImage(widget.profilePicUrl),
                   fit: BoxFit.cover,
                 ),
               ),

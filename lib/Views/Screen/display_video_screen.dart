@@ -1,47 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tictok/Views/Widgets/albom_icon.dart';
 import 'package:tictok/Views/Widgets/pofile_button.dart';
 import 'package:tictok/Views/Widgets/tiktio_video_player.dart';
+import 'package:tictok/controller/video_controller.dart';
 
 class DisplayVideoScreen extends StatelessWidget {
-  const DisplayVideoScreen({super.key});
-
+  DisplayVideoScreen({super.key});
+  final VideoController videoController = Get.put(VideoController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView.builder(
+    return Scaffold(body: Obx(() {
+      return PageView.builder(
+          reverse: true,
           controller: PageController(initialPage: 0, viewportFraction: 1),
           scrollDirection: Axis.vertical,
-          itemCount: 10,
+          itemCount: videoController.videoList.length,
           itemBuilder: (context, index) {
+            final data = videoController.videoList[index];
             return Stack(
               children: [
                 TikTokVideoPlayer(
-                  videoUrl: "",
+                  videoUrl: data.videoUrl,
                 ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 10, left: 15),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
-                        "@Username",
-                        style: TextStyle(
+                        data.username,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "My Caption",
-                        style: TextStyle(
+                        data.caption,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "SongName",
-                        style: TextStyle(
+                        data.songname,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
@@ -60,47 +64,52 @@ class DisplayVideoScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ProfileButton(
-                          profilePicUrl: "ADD",
+                          profilePicUrl: data.profilePic,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            videoController.likedVideo(data.id);
+                          },
+                          child: Column(
+                            children: [
+                              const Icon(
+                                Icons.favorite,
+                                size: 40,
+                                color: Colors.pinkAccent,
+                              ),
+                              Text(
+                                data.likes.length.toString(),
+                                style: const TextStyle(
+                                    fontSize: 15, color: Colors.white),
+                              ),
+                            ],
+                          ),
                         ),
                         Column(
-                          children: const [
-                            Icon(
-                              Icons.favorite,
-                              size: 40,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              "Like",
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Icons.reply,
                               size: 40,
                               color: Colors.white,
                             ),
                             Text(
-                              "Share",
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.white),
+                              data.sharecount.toString(),
+                              style: const TextStyle(
+                                  fontSize: 15, color: Colors.white),
                             ),
                           ],
                         ),
                         Column(
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Icons.comment,
                               size: 40,
                               color: Colors.white,
                             ),
                             Text(
-                              "Comments",
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.white),
+                              data.commentcounts.toString(),
+                              style: const TextStyle(
+                                  fontSize: 15, color: Colors.white),
                             ),
                           ],
                         ),
@@ -113,7 +122,7 @@ class DisplayVideoScreen extends StatelessWidget {
                 )
               ],
             );
-          }),
-    );
+          });
+    }));
   }
 }

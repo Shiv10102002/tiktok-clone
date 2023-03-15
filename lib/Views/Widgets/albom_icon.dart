@@ -16,7 +16,7 @@ class _AlbomIconState extends State<AlbomIcon>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 5),
+      duration: const Duration(seconds: 5),
     );
     controller.forward();
     controller.repeat();
