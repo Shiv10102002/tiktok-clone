@@ -21,8 +21,13 @@ class _AddCaptionScreenState extends State<AddCaptionScreen> {
   late VideoPlayerController videoPlayerController;
   VideoUploadController videoUploadController =
       Get.put(VideoUploadController());
-  final TextEditingController _songnameController = TextEditingController();
-  final TextEditingController _captionController = TextEditingController();
+  final TextEditingController songnameController = TextEditingController();
+  final TextEditingController captionController = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    videoPlayerController.dispose();
+  }
 
   @override
   void initState() {
@@ -37,52 +42,51 @@ class _AddCaptionScreenState extends State<AddCaptionScreen> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    videoPlayerController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 1.5,
-            width: MediaQuery.of(context).size.width,
-            child: VideoPlayer(videoPlayerController),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            height: MediaQuery.of(context).size.height / 4,
-            width: MediaQuery.of(context).size.width,
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              TextinputField(
-                  controller: _songnameController,
-                  myLabelText: "song name",
-                  myIcon: Icons.music_note),
-              const SizedBox(
-                height: 20,
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 1.5,
+              width: MediaQuery.of(context).size.width,
+              child: VideoPlayer(videoPlayerController),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              height: MediaQuery.of(context).size.height / 4,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextinputField(
+                      controller: songnameController,
+                      myLabelText: "song name",
+                      myIcon: Icons.music_note),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextinputField(
+                      controller: captionController,
+                      myLabelText: "caption",
+                      myIcon: Icons.closed_caption),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      VideoUploadController.uploadVideo(songnameController.text,
+                          captionController.text, widget.videoPath);
+                    },
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: buttoncolor),
+                    child: const Text("Upload"),
+                  ),
+                ],
               ),
-              TextinputField(
-                  controller: _captionController,
-                  myLabelText: "caption",
-                  myIcon: Icons.closed_caption),
-              const SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  VideoUploadController.uploadVideo(_songnameController.text,
-                      _captionController.text, widget.videoPath);
-                },
-                style: ElevatedButton.styleFrom(backgroundColor: buttoncolor),
-                child: const Text("Upload"),
-              ),
-            ]),
-          )
-        ]),
+            )
+          ],
+        ),
       ),
     );
   }

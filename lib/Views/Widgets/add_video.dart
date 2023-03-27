@@ -12,7 +12,7 @@ class AddVideoScreen extends StatelessWidget {
     if (video != null) {
       Get.snackbar("video selected", video.path);
 
-      Get.to(() =>
+      Get.to(
           AddCaptionScreen(videoFIle: File(video.path), videoPath: video.path));
     } else {
       Get.snackbar("Error in selected video", "please select another video");
